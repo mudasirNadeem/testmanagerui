@@ -1,12 +1,16 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 function Signup() {
+  localStorage.clear();
 var [validateMessage , setValidateMaessage] = useState(false);
   const navigate = useNavigate();
   const sinUpUser = async (e) => {
     e.preventDefault();
     const form = e.target.closest("form");
     const formData = new FormData(form);
+    var passwordElement = document.getElementById('password')
+    if(passwordElement.value.length >= 8){
+    
     const response = await fetch("http://localhost:3000/api/signUp", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -17,12 +21,16 @@ var [validateMessage , setValidateMaessage] = useState(false);
     });
     const data = await response.json();
     if (data.ok) {
+      localStorage.setItem('userId', data.signUpUser.id);
       navigate("/dashboard");
     } else {
       setValidateMaessage(true);
     }
+    }
+    else{
+      alert('The passowrd should greate than 8 digit')
+    }
   };
-
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100 p-4">

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 function Login() {
+  localStorage.clear();
   const navigate = useNavigate();
   var [validateMessage , setValidateMaessage] = useState(false)
   const sinInUser = async (e) => {
@@ -18,6 +19,7 @@ function Login() {
     });
     const data = await response.json();
     if (data.ok) {
+          localStorage.setItem('userId', data.user.id);
       navigate("/dashboard");
     } else {
    setValidateMaessage(true)

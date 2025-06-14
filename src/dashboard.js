@@ -1,11 +1,15 @@
-import { Plus, Search, Edit, Trash2, Check, Filter } from "lucide-react";
+import { Search, Filter } from "lucide-react";
 import TodayProgress from "./today-progress";
 import TestHeader from "./test-header";
-import TestFielter from "./test-fielter";
 import TestList from "./tesk-list";
 import 'flowbite'; // ✅ this is required for tabs to work
 
 const TaskManagerAll = () => {
+        const userId = localStorage.getItem("userId");
+  if (!userId) {
+   window.location.href = '/';
+  }
+
   return (
     <div className="">
       <TestHeader />
@@ -19,15 +23,15 @@ const TaskManagerAll = () => {
                 Filter Tasks
               </h3>
 
-              <div class="">
+              <div className="">
                 <ul
-                  class="flex flex-wrap -mb-px text-sm font-medium items-center text-center"
+                  className="flex flex-wrap -mb-px text-sm font-medium items-center text-center"
                   id="default-styled-tab"
                   data-tabs-toggle="#default-styled-tab-content"
                   data-tabs-active-classes="!bg-blue-500 text-white"
                   role="tablist"
                 >
-                  <li class="me-2" role="presentation">
+                  <li className="me-2" role="presentation">
                     <button
                      className="bg-slate-200  px-4 py-1.5 rounded-full text-sm font-medium"
                       id="profile-styled-tab"
@@ -40,9 +44,9 @@ const TaskManagerAll = () => {
                       All
                     </button>
                   </li>
-                  <li class="me-2" role="presentation">
+                  <li className="me-2" role="presentation">
                     <button
-                      class="bg-slate-200  px-4 py-1.5 rounded-full text-sm font-medium transition-colors"
+                      className="bg-slate-200  px-4 py-1.5 rounded-full text-sm font-medium transition-colors"
                       id="dashboard-styled-tab"
                       data-tabs-target="#styled-dashboard"
                       type="button"
@@ -53,9 +57,9 @@ const TaskManagerAll = () => {
                       In Progress
                     </button>
                   </li>
-                  <li class="me-2" role="presentation">
+                  <li className="me-2" role="presentation">
                     <button
-                      class="bg-slate-200  px-4 py-1.5 rounded-full text-sm font-medium transition-colors"
+                      className="bg-slate-200  px-4 py-1.5 rounded-full text-sm font-medium transition-colors"
                       id="settings-styled-tab"
                       data-tabs-target="#styled-settings"
                       type="button"
@@ -101,7 +105,7 @@ const TaskManagerAll = () => {
           >
             <p className="text-sm text-gray-500 dark:text-gray-400">
               This is some placeholder content the{" "}
-              <strong class="font-medium text-gray-800 dark:text-white">
+              <strong className="font-medium text-gray-800 dark:text-white">
                 Dashboard tab's associated content
               </strong>
               . Clicking another tab will toggle the visibility of this one for
@@ -117,7 +121,7 @@ const TaskManagerAll = () => {
           >
             <p className="text-sm text-gray-500 dark:text-gray-400">
               This is some placeholder content the{" "}
-              <strong class="font-medium text-gray-800 dark:text-white">
+              <strong className="font-medium text-gray-800 dark:text-white">
                 Settings tab's associated content
               </strong>
               . Clicking another tab will toggle the visibility of this one for
@@ -126,14 +130,14 @@ const TaskManagerAll = () => {
             </p>
           </div>
           <div
-            class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800"
+            className="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800"
             id="styled-contacts"
             role="tabpanel"
             aria-labelledby="contacts-tab"
           >
             <p className="text-sm text-gray-500 dark:text-gray-400">
               This is some placeholder content the{" "}
-              <strong class="font-medium text-gray-800 dark:text-white">
+              <strong className="font-medium text-gray-800 dark:text-white">
                 Contacts tab's associated content
               </strong>
               . Clicking another tab will toggle the visibility of this one for
