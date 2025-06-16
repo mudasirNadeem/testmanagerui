@@ -1,9 +1,9 @@
+import 'flowbite'; // ✅ this is required for tabs to work
 import { Search, Filter } from "lucide-react";
 import TodayProgress from "./today-progress";
 import TestHeader from "./test-header";
 import TestList from "./tesk-list";
-import 'flowbite'; // ✅ this is required for tabs to work
-
+import InProgress from './inprogress-test';
 const TaskManagerAll = () => {
         const userId = localStorage.getItem("userId");
   if (!userId) {
@@ -52,7 +52,8 @@ const TaskManagerAll = () => {
                       type="button"
                       role="tab"
                       aria-controls="dashboard"
-                      aria-selected="false"
+                       aria-selected="false"
+                      defaultChecked = "true"
                     >
                       In Progress
                     </button>
@@ -103,15 +104,7 @@ const TaskManagerAll = () => {
             role="tabpanel"
             aria-labelledby="dashboard-tab"
           >
-            <p className="text-sm text-gray-500 dark:text-gray-400">
-              This is some placeholder content the{" "}
-              <strong className="font-medium text-gray-800 dark:text-white">
-                Dashboard tab's associated content
-              </strong>
-              . Clicking another tab will toggle the visibility of this one for
-              the next. The tab JavaScript swaps classes to control the content
-              visibility and styling.
-            </p>
+           <InProgress />
           </div>
           <div
             className="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800"

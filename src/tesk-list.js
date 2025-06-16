@@ -26,6 +26,26 @@ const TestList = () => {
     });
     const data = await response.json();
   }
+  async function progressPositionFun(id , progress) {
+     const response = await fetch("http://localhost:3000/api/progressPositionItems", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        userId: localStorage.getItem("userId"),
+        id: id,
+        progress : progress
+      }),
+    });
+    var data = await response.json();
+    if(data.ok){
+      allTestShowFun();
+    }
+    else {
+    console.error("Update failed:", data.error);
+  }
+  }
+
+
   useEffect(() => {
   allTestShowFun();
 }, []);
@@ -59,10 +79,10 @@ const TestList = () => {
               </div>
 
               <div className="flex gap-2">
-                <button className="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded-lg text-sm transition-colors">
+                <button onClick={ () => progressPositionFun(task.id , "inprogress")} className="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded-lg text-sm transition-colors">
                   In Progress
                 </button>
-                <button className="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded-lg text-sm transition-colors">
+                <button onClick={ () => progressPositionFun(task.id , 'complited')} className="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded-lg text-sm transition-colors">
                   <Check size={12} className="mr-1 inline" />
                   Done
                 </button>

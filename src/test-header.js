@@ -1,7 +1,7 @@
+import 'flowbite'; // Required for tabs, modals, etc.
 import React, { useState } from 'react';
 import { Plus } from 'lucide-react';
 import AddTaskModal from './add-test-modal'
-import 'flowbite'; // Required for tabs, modals, etc.
 
 const TestHeader = () => {
     var [openModal , setOpenModal] = useState(false);
