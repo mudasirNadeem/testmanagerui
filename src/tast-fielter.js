@@ -1,9 +1,9 @@
 import 'flowbite'; 
 import { Search, Filter } from 'lucide-react';
 import TodayProgress from './today-progress';
-import TestList from './tesk-list';
+import TestList from './task-list';
 
-const TestFielter = () => {
+const TastFielter = () => {
   return(
     <>
           <div className="bg-slate-50 px-5 py-4 rounded-t-xl">
@@ -79,4 +79,4 @@ const TestFielter = () => {
 }
 
 
-export default  TestFielter
+export default  TastFielter

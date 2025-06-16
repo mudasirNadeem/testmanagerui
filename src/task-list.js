@@ -1,12 +1,9 @@
 import { Edit, Trash2, Check } from "lucide-react";
 import { useEffect, useState } from "react";
-import TodayProgress from "./today-progress";
-
 const TastList = () => {
-  const [allTesk, setAllTesk] = useState([]);
-  const todoTasks = allTesk.length;
+  const [allTask, setallTask] = useState([]);
   const userId = localStorage.getItem("userId");
-  async function allTestShowFun() {
+  async function allTastShowFun() {
     const response = await fetch("http://localhost:3000/api/showAllTasks", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -14,7 +11,7 @@ const TastList = () => {
     });
     const data = await response.json();
     if (data.ok) {
-      setAllTesk(data.tasts);
+      setallTask(data.tasts);
     }
   }
   async function removeTeskItem(id) {
@@ -40,7 +37,7 @@ const TastList = () => {
     });
     var data = await response.json();
     if(data.ok){
-      allTestShowFun();
+      allTastShowFun();
     }
     else {
     console.error("Update failed:", data.error);
@@ -49,17 +46,17 @@ const TastList = () => {
 
 
   useEffect(() => {
-  allTestShowFun();
+  allTastShowFun();
 }, []);
   return (
     <>
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-xl font-bold text-slate-800">Today's Tasks</h2>
-        <span className="text-slate-600">{allTesk.length} tasks remaining</span>
+        <span className="text-slate-600">{allTask.length} tasks remaining</span>
       </div>
 
       <div className="space-y-4">
-        {allTesk.map((task, index) => (
+        {allTask.map((task, index) => (
           <div
             key={index}
             className="p-5 rounded-lg border-2 border-red-500 bg-red-50 hover:shadow-md transition-all"

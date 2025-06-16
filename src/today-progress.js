@@ -2,9 +2,9 @@ import { Flag, BarChart3 } from 'lucide-react';
 import { useEffect, useState } from "react";
 
  function TodayProgress() {
-   const [allTesk, setAllTesk] = useState([]);
+   const [allTask, setallTask] = useState([]);
    const [allComplitedTesk, setAllComlitedTesk] = useState([]);
-   var totalTasks = allTesk.length;
+   var totalTasks = allTask.length;
    var complitedTasks = allComplitedTesk.length;
    var totalProgress = complitedTasks / totalTasks * 100;
   async function allTestShowFun() {
@@ -16,7 +16,7 @@ import { useEffect, useState } from "react";
     });
     const data = await response.json();
     if (data.ok) {
-      setAllTesk(data.tasks);
+      setallTask(data.tasks);
     }
   }
   useEffect(() => {

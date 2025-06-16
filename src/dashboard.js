@@ -2,8 +2,8 @@ import 'flowbite'; // ✅ this is required for tabs to work
 import { Search, Filter } from "lucide-react";
 import TodayProgress from "./today-progress";
 import TestHeader from "./test-header";
-import TestList from "./tesk-list";
-import InProgress from './inprogress-test';
+import TastList from "./task-list";
+import InProgress from './inprogress-task';
 import Complited from './complited';
 const TaskManagerAll = () => {
         const userId = localStorage.getItem("userId");
@@ -96,7 +96,7 @@ const TaskManagerAll = () => {
             role="tabpanel"
             aria-labelledby="profile-styled-tab"
           >
-            <TestList />
+            <TastList />
             <TodayProgress />
           </div>
           <div

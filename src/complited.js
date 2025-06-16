@@ -6,7 +6,7 @@ const Complited = () => {
   const [allComplitedTasks, setAllTask] = useState([]);
   var complitedTasks = allComplitedTasks.length;
   const userId = localStorage.getItem("userId");
-  async function allInprogressTastsFun() {
+  async function allComplitedTastsFun() {
     const response = await fetch("http://localhost:3000/api/showAllComplitedTasks", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -42,14 +42,14 @@ const Complited = () => {
     });
     var data = await response.json();
     if(data.ok){
-      allInprogressTastsFun();
+      allComplitedTastsFun();
     }
     else {
     console.error("Update failed:", data.error);
   }
   }
   useState(() => {
-  allInprogressTastsFun();
+  progressPositionFun();
 }, []);
     return(
     <>
