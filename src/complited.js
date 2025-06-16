@@ -1,23 +1,24 @@
 import { Edit, Trash2, Check } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import TodayProgress from "./today-progress";
+const Complited = () => {
 
-const TastList = () => {
-  const [allTesk, setAllTesk] = useState([]);
-  const todoTasks = allTesk.length;
+  const [allComplitedTasks, setAllTask] = useState([]);
+  var complitedTasks = allComplitedTasks.length;
   const userId = localStorage.getItem("userId");
-  async function allTestShowFun() {
-    const response = await fetch("http://localhost:3000/api/showAllTasks", {
+  async function allInprogressTastsFun() {
+    const response = await fetch("http://localhost:3000/api/showAllComplitedTasks", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ userId }),
     });
     const data = await response.json();
     if (data.ok) {
-      setAllTesk(data.tasts);
+      setAllTask(data.tasts);
     }
   }
-  async function removeTeskItem(id) {
+
+  async function removeTaskItem(id) {
     const response = await fetch("http://localhost:3000/api/removeTaskItem", {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
@@ -28,7 +29,8 @@ const TastList = () => {
     });
     const data = await response.json();
   }
-  async function progressPositionFun(id , progress) {
+
+    async function progressPositionFun(id , progress) {
      const response = await fetch("http://localhost:3000/api/progressPositionItems", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -40,26 +42,24 @@ const TastList = () => {
     });
     var data = await response.json();
     if(data.ok){
-      allTestShowFun();
+      allInprogressTastsFun();
     }
     else {
     console.error("Update failed:", data.error);
   }
   }
-
-
-  useEffect(() => {
-  allTestShowFun();
+  useState(() => {
+  allInprogressTastsFun();
 }, []);
-  return (
+    return(
     <>
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-xl font-bold text-slate-800">Today's Tasks</h2>
-        <span className="text-slate-600">{allTesk.length} tasks remaining</span>
+        <h2 className="text-xl font-bold text-slate-800">Complited Tasks</h2>
+        <span className="text-slate-600">{allComplitedTasks.length} Complited Tasks</span>
       </div>
 
       <div className="space-y-4">
-        {allTesk.map((task, index) => (
+        {allComplitedTasks.map((task, index) => (
           <div
             key={index}
             className="p-5 rounded-lg border-2 border-red-500 bg-red-50 hover:shadow-md transition-all"
@@ -81,19 +81,11 @@ const TastList = () => {
               </div>
 
               <div className="flex gap-2">
-                <button onClick={ () => progressPositionFun(task.id , "inprogress")} className="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded-lg text-sm transition-colors">
+                     <button onClick={ () => progressPositionFun(task.id , "inprogress")} className="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded-lg text-sm transition-colors">
                   In Progress
                 </button>
-                <button onClick={ () => progressPositionFun(task.id , 'complited')} className="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded-lg text-sm transition-colors">
-                  <Check size={12} className="mr-1 inline" />
-                  Done
-                </button>
-                <button className="bg-amber-500 hover:bg-amber-600 text-white px-3 py-1 rounded-lg text-sm transition-colors">
-                  <Edit size={12} className="mr-1 inline" />
-                  Edit
-                </button>
                 <button
-                  onClick={() => removeTeskItem(task.id)}
+                  onClick={() => removeTaskItem(task.id)}
                   id={task.id}
                   className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-lg text-sm transition-colors"
                 >
@@ -106,7 +98,6 @@ const TastList = () => {
         ))}
       </div>
     </>
-  );
-};
-
-export default TastList;
+    );
+}
+export default Complited

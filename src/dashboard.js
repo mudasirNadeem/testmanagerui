@@ -4,6 +4,7 @@ import TodayProgress from "./today-progress";
 import TestHeader from "./test-header";
 import TestList from "./tesk-list";
 import InProgress from './inprogress-test';
+import Complited from './complited';
 const TaskManagerAll = () => {
         const userId = localStorage.getItem("userId");
   if (!userId) {
@@ -112,15 +113,7 @@ const TaskManagerAll = () => {
             role="tabpanel"
             aria-labelledby="settings-tab"
           >
-            <p className="text-sm text-gray-500 dark:text-gray-400">
-              This is some placeholder content the{" "}
-              <strong className="font-medium text-gray-800 dark:text-white">
-                Settings tab's associated content
-              </strong>
-              . Clicking another tab will toggle the visibility of this one for
-              the next. The tab JavaScript swaps classes to control the content
-              visibility and styling.
-            </p>
+          <Complited />
           </div>
           <div
             className="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800"

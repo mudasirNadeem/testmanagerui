@@ -1,5 +1,43 @@
 import { Flag, BarChart3 } from 'lucide-react';
+import { useEffect, useState } from "react";
+
  function TodayProgress() {
+   const [allTesk, setAllTesk] = useState([]);
+   const [allComplitedTesk, setAllComlitedTesk] = useState([]);
+   var totalTasks = allTesk.length;
+   var complitedTasks = allComplitedTesk.length;
+   var totalProgress = complitedTasks / totalTasks * 100;
+  async function allTestShowFun() {
+  const userId = localStorage.getItem("userId");
+    const response = await fetch("http://localhost:3000/api/progessAllTasks", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ userId }),
+    });
+    const data = await response.json();
+    if (data.ok) {
+      setAllTesk(data.tasks);
+    }
+  }
+  useEffect(() => {
+  allTestShowFun();
+  allShowComplitedTasks();
+
+}, []);
+
+ async function allShowComplitedTasks() {
+  const userId = localStorage.getItem("userId");
+    const response = await fetch("http://localhost:3000/api/complitedTasks", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ userId }),
+    });
+    const data = await response.json();
+    if (data.ok) {
+      setAllComlitedTesk(data.tasks);
+    }
+  }
+
     return (
           <div className="flex gap-6 mt-8">
               {/* Stats Panel */}
@@ -12,9 +50,9 @@ import { Flag, BarChart3 } from 'lucide-react';
                 {/* Progress Bar */}
                 <div className="mb-4">
                   <div className="w-full bg-slate-200 rounded-full h-3 mb-2">
-                    <div className="bg-green-500 h-3 rounded-full" style={{width: '60%'}}></div>
+                    <div className="bg-green-500 h-3 rounded-full" style={{ width: `${totalProgress}%` }}></div>
                   </div>
-                  <p className="text-center text-slate-600 text-sm">3 of 5 tasks completed (60%)</p>
+                  <p className="text-center text-slate-600 text-sm">{complitedTasks} of {totalTasks} tasks completed ({totalProgress.toFixed(2)}%)</p>
                 </div>
                 
                 {/* Quick Stats */}
