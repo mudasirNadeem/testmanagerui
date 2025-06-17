@@ -4,7 +4,6 @@ import TodayProgress from "./today-progress";
 const Complited = () => {
 
   const [allComplitedTasks, setAllTask] = useState([]);
-  var complitedTasks = allComplitedTasks.length;
   const userId = localStorage.getItem("userId");
   async function allComplitedTastsFun() {
     const response = await fetch("http://localhost:3000/api/showAllComplitedTasks", {

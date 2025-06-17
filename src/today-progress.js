@@ -52,7 +52,7 @@ import { useEffect, useState } from "react";
                   <div className="w-full bg-slate-200 rounded-full h-3 mb-2">
                     <div className="bg-green-500 h-3 rounded-full" style={{ width: `${totalProgress}%` }}></div>
                   </div>
-                  <p className="text-center text-slate-600 text-sm">{complitedTasks} of {totalTasks} tasks completed ({totalProgress.toFixed(2)}%)</p>
+                  <p className="text-center text-slate-600 text-sm">{complitedTasks} of {totalTasks} tasks completed ({totalProgress.toFixed()}%)</p>
                 </div>
                 
                 {/* Quick Stats */}
