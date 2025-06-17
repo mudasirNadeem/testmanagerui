@@ -1,8 +1,14 @@
 import { Edit, Trash2, Check } from "lucide-react";
-import { useEffect, useState } from "react";
-const TastList = () => {
+import { forwardRef, useEffect, useImperativeHandle, useState } from "react";
+
+const TastList = forwardRef((props, ref) => {
   const [allTask, setallTask] = useState([]);
   const userId = localStorage.getItem("userId");
+
+  useImperativeHandle(ref, () => ({
+    allTastShowFun
+  }));
+
   async function allTastShowFun() {
     const response = await fetch("http://localhost:3000/api/showAllTasks", {
       method: "POST",
@@ -14,6 +20,7 @@ const TastList = () => {
       setallTask(data.tasts);
     }
   }
+
   async function removeTeskItem(id) {
     const response = await fetch("http://localhost:3000/api/removeTaskItem", {
       method: "DELETE",
@@ -24,30 +31,33 @@ const TastList = () => {
       }),
     });
     const data = await response.json();
+    if (data.ok) {
+      allTastShowFun();
+    }
   }
-  async function progressPositionFun(id , progress) {
-     const response = await fetch("http://localhost:3000/api/progressPositionItems", {
+
+  async function progressPositionFun(id, progress) {
+    const response = await fetch("http://localhost:3000/api/progressPositionItems", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         userId: localStorage.getItem("userId"),
         id: id,
-        progress : progress
+        progress: progress
       }),
     });
     var data = await response.json();
-    if(data.ok){
+    if (data.ok) {
       allTastShowFun();
+    } else {
+      console.error("Update failed:", data.error);
     }
-    else {
-    console.error("Update failed:", data.error);
   }
-  }
-
 
   useEffect(() => {
-  allTastShowFun();
-}, []);
+    allTastShowFun();
+  }, []);
+
   return (
     <>
       <div className="flex justify-between items-center mb-6">
@@ -78,10 +88,16 @@ const TastList = () => {
               </div>
 
               <div className="flex gap-2">
-                <button onClick={ () => progressPositionFun(task.id , "inprogress")} className="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded-lg text-sm transition-colors">
+                <button
+                  onClick={() => progressPositionFun(task.id, "inprogress")}
+                  className="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded-lg text-sm transition-colors"
+                >
                   In Progress
                 </button>
-                <button onClick={ () => progressPositionFun(task.id , 'complited')} className="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded-lg text-sm transition-colors">
+                <button
+                  onClick={() => progressPositionFun(task.id, "complited")}
+                  className="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded-lg text-sm transition-colors"
+                >
                   <Check size={12} className="mr-1 inline" />
                   Done
                 </button>
@@ -104,6 +120,6 @@ const TastList = () => {
       </div>
     </>
   );
-};
+});
 
 export default TastList;

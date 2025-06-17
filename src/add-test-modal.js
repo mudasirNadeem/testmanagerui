@@ -1,7 +1,7 @@
 import React from 'react';
 import TestList from './task-list';
 
-function AddTaskModal({ open, onClose }) {
+function AddTaskModal({ open, onClose ,  setTaskFunction }) {
         const userId = localStorage.getItem("userId");
   async function addTests(event) {
     event.preventDefault();
@@ -22,6 +22,7 @@ function AddTaskModal({ open, onClose }) {
     const data = await response.json();
     if(data.ok){
       onClose();
+      setTaskFunction();
     }
   }
 
