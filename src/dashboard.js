@@ -1,27 +1,31 @@
-import 'flowbite';
+import "flowbite";
 import { Search, Filter } from "lucide-react";
 import TodayProgress from "./today-progress";
-import TestHeader from "./test-header";
-import TastList from "./task-list";
-import InProgress from './inprogress-task';
-import Complited from './complited';
-import { useRef, useCallback } from 'react';
+import TaskHeader from "./task-header";
+import TaskList from "./task-list";
+import InProgress from "./inprogress-task";
+import Completed from "./completed";
+import { useRef, useCallback, useState } from "react";
 
 const TaskManagerAll = () => {
   const userId = localStorage.getItem("userId");
   if (!userId) {
-    window.location.href = '/';
+    window.location.href = "/";
   }
   const taskListRef = useRef(null);
   const setAllTaskFun = useCallback(() => {
-    if (taskListRef.current && taskListRef.current.allTastShowFun) {
-      taskListRef.current.allTastShowFun();
+    if (taskListRef.current && taskListRef.current.allTaskShow) {
+      taskListRef.current.allTaskShow();
     }
   }, []);
 
+  var [searchText, setSearchText] = useState();
+  function searchTasks(e) {
+    setSearchText(e.target.value);
+  }
   return (
-    <div className="">
-      <TestHeader Task={setAllTaskFun} />
+    <div>
+      <TaskHeader Task={setAllTaskFun} />
       <div className="max-w-7xl mx-auto p-10">
         <div className="bg-slate-50 px-5 py-4 rounded-t-xl">
           <div className="flex justify-between items-center">
@@ -88,6 +92,8 @@ const TaskManagerAll = () => {
               <input
                 type="text"
                 placeholder="🔍 Search tasks..."
+                id="search-bar"
+                onInput={(e) => searchTasks(e)}
                 className="pl-10 pr-4 py-2 border border-slate-300 rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent w-56"
               />
             </div>
@@ -101,7 +107,11 @@ const TaskManagerAll = () => {
             role="tabpanel"
             aria-labelledby="profile-styled-tab"
           >
-            <TastList ref={taskListRef} setTaskFunction={setAllTaskFun} />
+            <TaskList
+              searchTasks={searchText}
+              ref={taskListRef}
+              setTaskFunction={setAllTaskFun}
+            />
             <TodayProgress />
           </div>
 
@@ -111,7 +121,7 @@ const TaskManagerAll = () => {
             role="tabpanel"
             aria-labelledby="dashboard-tab"
           >
-            <InProgress   />
+            <InProgress />
           </div>
 
           <div
@@ -120,22 +130,7 @@ const TaskManagerAll = () => {
             role="tabpanel"
             aria-labelledby="settings-tab"
           >
-            <Complited />
-          </div>
-
-          <div
-            className="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800"
-            id="styled-contacts"
-            role="tabpanel"
-            aria-labelledby="contacts-tab"
-          >
-            <p className="text-sm text-gray-500 dark:text-gray-400">
-              This is some placeholder content the
-              <strong className="font-medium text-gray-800 dark:text-white">
-                Contacts tab's associated content
-              </strong>
-              .
-            </p>
+            <Completed />
           </div>
         </div>
       </div>

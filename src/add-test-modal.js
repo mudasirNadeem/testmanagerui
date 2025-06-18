@@ -1,26 +1,23 @@
-import React from 'react';
-import TestList from './task-list';
-
-function AddTaskModal({ open, onClose ,  setTaskFunction }) {
-        const userId = localStorage.getItem("userId");
+function AddTaskModal({ open, onClose, setTaskFunction }) {
+  const userId = localStorage.getItem("userId");
   async function addTests(event) {
     event.preventDefault();
-        const form = event.target.closest("form");
+    const form = event.target.closest("form");
     const formData = new FormData(form);
-        const response = await fetch("http://localhost:3000/api/assignTasts", {
+    const response = await fetch("http://localhost:3000/api/assignTasks", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        userId : userId,
-        position : 'todo',
+        userId: userId,
+        position: "todo",
         title: formData.get("title"),
         dueDate: formData.get("dueDate"),
-       priority :formData.get("priority"),
+        priority: formData.get("priority"),
         discription: formData.get("discription"),
       }),
     });
     const data = await response.json();
-    if(data.ok){
+    if (data.ok) {
       onClose();
       setTaskFunction();
     }
@@ -45,10 +42,12 @@ function AddTaskModal({ open, onClose ,  setTaskFunction }) {
         <form onSubmit={addTests}>
           <div className="mt-4 space-y-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Task Title</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Task Title
+              </label>
               <input
                 type="text"
-                name='title'
+                name="title"
                 required
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Enter task title"
@@ -56,17 +55,21 @@ function AddTaskModal({ open, onClose ,  setTaskFunction }) {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Due Date</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Due Date
+              </label>
               <input
                 required
-              name='dueDate'
+                name="dueDate"
                 type="date"
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Priority</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Priority
+              </label>
               <select
                 name="priority"
                 required
@@ -80,11 +83,13 @@ function AddTaskModal({ open, onClose ,  setTaskFunction }) {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Description
+              </label>
               <textarea
                 rows="3"
                 required
-                name='discription'
+                name="discription"
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Enter task description"
               ></textarea>

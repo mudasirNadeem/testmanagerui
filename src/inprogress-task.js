@@ -1,18 +1,20 @@
 import { Edit, Trash2, Check } from "lucide-react";
 import { useState } from "react";
 const InProgress = () => {
-
   const [allInprogressTasks, setAllTask] = useState([]);
   const userId = localStorage.getItem("userId");
-  async function allInprogressTastsFun() {
-    const response = await fetch("http://localhost:3000/api/showAllInprogressTasks", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ userId }),
-    });
+  async function allInprogressTasksFun() {
+    const response = await fetch(
+      "http://localhost:3000/api/showAllInprogressTasks",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userId }),
+      }
+    );
     const data = await response.json();
     if (data.ok) {
-      setAllTask(data.tasts);
+      setAllTask(data.tasks);
     }
   }
 
@@ -28,32 +30,36 @@ const InProgress = () => {
     const data = await response.json();
   }
 
-    async function progressPositionFun(id , progress) {
-     const response = await fetch("http://localhost:3000/api/progressPositionItems", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        userId: localStorage.getItem("userId"),
-        id: id,
-        progress : progress
-      }),
-    });
+  async function progressPositionFun(id, progress) {
+    const response = await fetch(
+      "http://localhost:3000/api/progressPositionItems",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          userId: localStorage.getItem("userId"),
+          id: id,
+          progress: progress,
+        }),
+      }
+    );
     var data = await response.json();
-    if(data.ok){
-      allInprogressTastsFun();
+    if (data.ok) {
+      allInprogressTasksFun();
+    } else {
+      console.error("Update failed:", data.error);
     }
-    else {
-    console.error("Update failed:", data.error);
-  }
   }
   useState(() => {
-  allInprogressTastsFun();
-}, []);
-    return(
+    allInprogressTasksFun();
+  }, []);
+  return (
     <>
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-xl font-bold text-slate-800">Inprogress Tasks</h2>
-        <span className="text-slate-600">{allInprogressTasks.length} remaining in progress tasks</span>
+        <span className="text-slate-600">
+          {allInprogressTasks.length} remaining in progress tasks
+        </span>
       </div>
 
       <div className="space-y-4">
@@ -79,7 +85,10 @@ const InProgress = () => {
               </div>
 
               <div className="flex gap-2">
-                <button onClick={ () => progressPositionFun(task.id , 'complited')} className="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded-lg text-sm transition-colors">
+                <button
+                  onClick={() => progressPositionFun(task.id, "completed")}
+                  className="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded-lg text-sm transition-colors"
+                >
                   <Check size={12} className="mr-1 inline" />
                   Done
                 </button>
@@ -101,6 +110,6 @@ const InProgress = () => {
         ))}
       </div>
     </>
-    );
-}
-export default InProgress
+  );
+};
+export default InProgress;
