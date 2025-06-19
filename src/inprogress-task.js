@@ -1,5 +1,6 @@
 import { Edit, Trash2, Check } from "lucide-react";
 import { useState } from "react";
+import EditTask from "./edit-task";
 const InProgress = () => {
   const [allInprogressTasks, setAllTask] = useState([]);
   const userId = localStorage.getItem("userId");
@@ -28,7 +29,13 @@ const InProgress = () => {
       }),
     });
     const data = await response.json();
+    if(data.ok){
+allInprogressTasksFun();
+    }
   }
+
+  var [editTask , setEditTask]= useState(false);
+
 
   async function progressPositionFun(id, progress) {
     const response = await fetch(
@@ -92,7 +99,7 @@ const InProgress = () => {
                   <Check size={12} className="mr-1 inline" />
                   Done
                 </button>
-                <button className="bg-amber-500 hover:bg-amber-600 text-white px-3 py-1 rounded-lg text-sm transition-colors">
+                <button onClick={() => setEditTask(true)} className="bg-amber-500 hover:bg-amber-600 text-white px-3 py-1 rounded-lg text-sm transition-colors">
                   <Edit size={12} className="mr-1 inline" />
                   Edit
                 </button>
@@ -109,6 +116,8 @@ const InProgress = () => {
           </div>
         ))}
       </div>
+            <EditTask  open={editTask} close={() => setEditTask(false)} />
+      
     </>
   );
 };

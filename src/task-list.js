@@ -1,5 +1,6 @@
 import { Edit, Trash2, Check } from "lucide-react";
 import { forwardRef, useEffect, useImperativeHandle, useState } from "react";
+import EditTask from "./edit-task";
 
 const TaskList = forwardRef((props, ref) => {
   const [allTask, setallTask] = useState([]);
@@ -59,6 +60,7 @@ const TaskList = forwardRef((props, ref) => {
     allTaskShow();
   }, []);
 
+  var [editTask , setEditTask]= useState(false);
   return (
     <>
       <div className="flex justify-between items-center mb-6">
@@ -105,10 +107,13 @@ const TaskList = forwardRef((props, ref) => {
                   <Check size={12} className="mr-1 inline" />
                   Done
                 </button>
-                <button className="bg-amber-500 hover:bg-amber-600 text-white px-3 py-1 rounded-lg text-sm transition-colors">
-                  <Edit size={12} className="mr-1 inline" />
-                  Edit
-                </button>
+               <button 
+  onClick={() => setEditTask({ open: true, id: task.id })} 
+  className="bg-amber-500 hover:bg-amber-600 text-white px-3 py-1 rounded-lg text-sm transition-colors"
+>
+  <Edit size={12} className="mr-1 inline" />
+  Edit
+</button>
                 <button
                   onClick={() => removeTeskItem(task.id)}
                   id={task.id}
@@ -122,6 +127,7 @@ const TaskList = forwardRef((props, ref) => {
           </div>
         ))}
       </div>
+  <EditTask id={editTask.id} open={editTask.open} close={() => setEditTask(false)} />
     </>
   );
 });
